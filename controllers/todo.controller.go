@@ -4,15 +4,10 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/eznxxy/go-todo/dtos"
 	"github.com/eznxxy/go-todo/models"
 	"github.com/labstack/echo"
 )
-
-type Request struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	IsFinish    bool   `json:"isFinish"`
-}
 
 func FetchAllTodo(ctx echo.Context) error {
 	result, err := models.FetchAllTodo()
@@ -24,7 +19,7 @@ func FetchAllTodo(ctx echo.Context) error {
 }
 
 func CraeteTodo(ctx echo.Context) error {
-	var request Request
+	var request dtos.Todo
 	json.NewDecoder(ctx.Request().Body).Decode(&request)
 
 	result, err := models.CreateTodo(request.Title, request.Description)
@@ -38,7 +33,7 @@ func CraeteTodo(ctx echo.Context) error {
 func UpdateTodo(ctx echo.Context) error {
 	id := ctx.Param("id")
 
-	var request Request
+	var request dtos.Todo
 	json.NewDecoder(ctx.Request().Body).Decode(&request)
 
 	result, err := models.UpdateTodo(request.Title, request.Description, id)
@@ -63,7 +58,7 @@ func DeleteTodo(ctx echo.Context) error {
 func MarkTodo(ctx echo.Context) error {
 	id := ctx.Param("id")
 
-	var request Request
+	var request dtos.Todo
 	json.NewDecoder(ctx.Request().Body).Decode(&request)
 
 	result, err := models.MarkTodo(request.IsFinish, id)

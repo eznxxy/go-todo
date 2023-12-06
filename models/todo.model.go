@@ -5,18 +5,12 @@ import (
 	"strconv"
 
 	"github.com/eznxxy/go-todo/database"
+	"github.com/eznxxy/go-todo/dtos"
 )
 
-type Todo struct {
-	Id          int    `json:"id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	IsFinish    bool   `json:"isFinish"`
-}
-
 func FetchAllTodo() (Response, error) {
-	var obj Todo
-	var arrobj []Todo
+	var obj dtos.Todo
+	var arrobj []dtos.Todo
 	var res Response
 
 	conn := database.CreateConn()
@@ -45,7 +39,7 @@ func FetchAllTodo() (Response, error) {
 }
 
 func CreateTodo(title string, description string) (Response, error) {
-	var obj Todo
+	var obj dtos.Todo
 	var res Response
 
 	conn := database.CreateConn()
@@ -78,7 +72,7 @@ func CreateTodo(title string, description string) (Response, error) {
 }
 
 func UpdateTodo(title string, description string, id string) (Response, error) {
-	var obj Todo
+	var obj dtos.Todo
 	var res Response
 
 	conn := database.CreateConn()
